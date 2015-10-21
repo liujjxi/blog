@@ -23,6 +23,7 @@ module.exports = function(app) {
       error:req.flash('error').toString()
     });//第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译。
   });
+  app.get('/reg',checkNotLogin);
   app.get('/reg',function(req,res){
   	res.render('reg',{
       title:'注册',
@@ -31,6 +32,7 @@ module.exports = function(app) {
       error:req.flash('error').toString()
    })
   });
+  app.post('/reg',checkNotLogin);
   app.post('/reg',function(req,res){
   	var name=req.body.name,// POST 请求信息解析过后的对象，例如我们要访问 POST 来的表单内的 name="password" 域的值，只需访问 req.body['password'] 或 req.body.password 即可
   			password=req.body.password,
@@ -71,6 +73,7 @@ module.exports = function(app) {
   		})
   	})
   });
+  app.get('/login',checkNotLogin);
 	app.get('/login',function(req,res){
     res.render('login', {
       title:'登录',
@@ -79,6 +82,7 @@ module.exports = function(app) {
       error:req.flash('error').toString()
     });
   });
+  app.post('/login',checkNotLogin);
   app.post('/login',function(req,res){
     //生成md5密码
     var md5=crypto.createHash('md5'),
@@ -100,6 +104,20 @@ module.exports = function(app) {
       res.redirect('/');
     });
   });
+  app.get('/post',checkLogin);
+  app.get('/post',function(req,res){
+    res.render('post', {
+      title:'发表',
+      user:req.session.user,
+      success:req.flash('success').toString(),
+      error:req.flash('error').toString()
+    });
+  });
+  app.post('/post',checkLogin);
+  app.post('/post',function(req,res){
+
+  });
+  app.get('/logout',checkLogin);
   app.get('/logout',function(req,res){
     req.session.user=null;
     req.flash('success','登出成功');
@@ -109,4 +127,18 @@ module.exports = function(app) {
 	  res.send('hello,world!');
 	});*/
 
+  function checkLogin(req,res,next){
+    if(!req.session.user){
+      req.flash('error','未登录');
+      res.redirect('/login');
+    }
+    next();
+  }
+  function checkNotLogin(req,res,next){
+    if(req.session.user){
+      req.flash('error','已登录');
+      res.redirect('/');
+    }
+    next();
+  }
 };
