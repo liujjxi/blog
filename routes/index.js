@@ -135,6 +135,20 @@ module.exports = function(app) {
     })
 
   });
+  app.get('/upload',checkLogin);
+  app.get('/upload',function(req,res){
+    res.render('upload',{
+      title:'文件上传',
+      user:req.session.user,
+      success:req.flash('success').toString(),
+      error:req.flash('error').toString()
+    })
+  });
+  app.post('/upload',checkLogin);
+  app.post('/upload',function(req,res){
+    req.flash('success','上传成功');
+    res.redirect('/upload');
+  });
   app.get('/logout',checkLogin);
   app.get('/logout',function(req,res){
     req.session.user=null;
