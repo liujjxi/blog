@@ -42,7 +42,12 @@ app.use(session({
   })
 }));
 
-app.use(multer({dest: './public/images'}));
+app.use(multer({
+  dest: './public/images',
+  rename: function (fieldname, filename) {
+    return filename;
+  }
+}));
 
 /*
 //路由控制器。
