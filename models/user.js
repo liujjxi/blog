@@ -28,6 +28,7 @@ User.prototype.save = function(callback) {
         return callback(err);//错误，返回 err 信息
       }
       //将用户数据插入 users 集合
+      console.log(user)
       collection.insert(user, {
         safe: true
       }, function (err, user) {

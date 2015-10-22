@@ -13,15 +13,24 @@ var router = express.Router();
 
 module.exports = router;*/
 var crypto=require('crypto'),//生成散列值来加密密码
-		User=require('../models/user.js');//User 是一个描述数据的对象，即 MVC 架构中的模型
+		User=require('../models/user.js'),
+    Post=require('../models/post.js');//User 是一个描述数据的对象，即 MVC 架构中的模型
 module.exports = function(app) {
   app.get('/', function (req, res) {
-    res.render('index', {
-      title:'主页',
-      user:req.session.user,
-      success:req.flash('success').toString(),
-      error:req.flash('error').toString()
-    });//第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译。
+    Post.get(null,function(err,posts){
+      if(err){
+        posts=[];
+      }
+      res.render('index', {
+        title:'主页',
+        user:req.session.user,
+        posts:posts,
+        success:req.flash('success').toString(),
+        error:req.flash('error').toString()
+      });
+    });
+
+    //第一个是模板的名称，即 views 目录下的模板文件名，扩展名 .ejs 可选。第二个参数是传递给模板的数据对象，用于模板翻译。
   });
   app.get('/reg',checkNotLogin);
   app.get('/reg',function(req,res){
@@ -58,7 +67,7 @@ module.exports = function(app) {
   		}
   		if(user){
   			req.flash('error','用户已存在');
-  			return res.redirect('/');
+  			return res.redirect('/login');
   		}
   		//如果不存在则新增用户
   		newUser.save(function(err,user){
@@ -69,7 +78,6 @@ module.exports = function(app) {
   			req.session.user=user;//用户信息存入session
   			req.flash('success','注册成功');
   			res.redirect('/');
-
   		})
   	})
   });
@@ -115,6 +123,16 @@ module.exports = function(app) {
   });
   app.post('/post',checkLogin);
   app.post('/post',function(req,res){
+    var currentUser=req.session.user,
+        post=new Post(currentUser.name,req.body.title,req.body.post);
+    post.save(function(err){
+      if(err){
+        req.flash('error',err);
+        return res.redirect('/');
+      }
+      req.flash('success','发布成功');
+      res.redirect('/');
+    })
 
   });
   app.get('/logout',checkLogin);
