@@ -93,8 +93,7 @@ article a:hover {
   text-indent: 0;
   line-height: 20px;
 }
-
-/* line 83, ../sass/screen.scss */
+/* line 84, ../sass/screen.scss */
 .upload:hover {
   background: #AADFFD;
   border-color: #78C3F3;
@@ -102,11 +101,28 @@ article a:hover {
   text-decoration: none;
 }
 
-/* line 87, ../sass/screen.scss */
+/* line 93, ../sass/screen.scss */
 #upload {
   position: absolute;
   font-size: 100px;
   right: 0;
   top: 0;
   opacity: 0;
+}
+
+/* line 101, ../sass/screen.scss */
+.edit {
+  margin: 3px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: #f3f3f3;
+  color: #333;
+  font-size: 13px;
+}
+/* line 108, ../sass/screen.scss */
+.edit:hover {
+  text-decoration: none;
+  background-color: #f00;
+  color: #fff;
+  -webkit-transition: color .2s linear;
 }

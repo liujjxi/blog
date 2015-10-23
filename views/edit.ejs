@@ -1,0 +1,14 @@
+<%- include header %>
+
+<form method="post">
+	<div class="form-group">
+		<label for="title">标题</label>
+		<input type="text" value="<%= post.title%>" disabled="disabled" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="post">正文</label>
+		<textarea name="post" id="post" class="form-control" rows="10"><%= post.post %></textarea>
+	</div>
+	<input type="submit" class="btn btn-primary" value="保存修改">
+</form>
+<%- include footer %>
