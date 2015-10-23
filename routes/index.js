@@ -14,7 +14,8 @@ var router = express.Router();
 module.exports = router;*/
 var crypto=require('crypto'),//生成散列值来加密密码
 		User=require('../models/user.js'),
-    Post=require('../models/post.js');//User 是一个描述数据的对象，即 MVC 架构中的模型
+    Post=require('../models/post.js'),
+    Comment=require('../models/comment.js');//User 是一个描述数据的对象，即 MVC 架构中的模型
 module.exports = function(app) {
   app.get('/', function (req, res) {
     Post.getAll(null,function(err,posts){
@@ -77,7 +78,7 @@ module.exports = function(app) {
   			}
   			req.session.user=user;//用户信息存入session
   			req.flash('success','注册成功');
-  			res.redirect('/');
+  			res.redirect('/login');
   		})
   	})
   });
@@ -187,6 +188,26 @@ module.exports = function(app) {
       });
     });
     
+  });
+  app.post('/u/:name/:day/:title',function(req,res){
+    var date=new Date(),
+        time=date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+(date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes());
+    var comment={
+      name:req.body.name,
+      email:req.body.email,
+      website:req.body.website,
+      time:time,
+      content:req.body.content
+    }
+    var newComment=new Comment(req.params.name,req.params.day,req.params.title,comment);
+    newComment.save(function(err){
+      if(err){
+        req.flash('error',err);
+        return res.redirect('back');
+      }
+      req.flash('success','留言成功');
+      res.redirect('back');
+    });
   });
   app.get('/edit/:name/:day/:title',checkLogin);
   app.get('/edit/:name/:day/:title',function(req,res){
