@@ -9,7 +9,7 @@ function Post(name,title,post) {
 
 module.exports = Post;
 
-//储存用户信息
+//储存文章
 Post.prototype.save = function(callback) {
   var date=new Date();
   //储存各种时间格式
@@ -52,8 +52,8 @@ Post.prototype.save = function(callback) {
   });
 };
 
-//读取用户信息
-Post.get = function(name, callback) {
+//读取文章
+Post.getAll = function(name, callback) {
     //打开数据库
     mongodb.open(function(err, db) {
         if (err) {
@@ -86,3 +86,34 @@ Post.get = function(name, callback) {
         });
     });
 }
+
+//读取一篇文章
+Post.getOne=function(name,day,title,callback){
+  //打开数据库
+  mongodb.open(function(err,db){
+    if(err){
+      callback(err);
+    }
+    //读取posts集合
+    db.collection('posts',function(err,collection){
+      if(err){
+        mongodb.close();
+        return callback(err);
+      }
+      //根据用户名、发表日期及文章标题进行查询
+      collection.findOne({
+        'name':name,
+        'time.day':day,
+        'title':title
+      },function(err,doc){
+        mongodb.close();
+        if(err){
+          return callback(err);
+        }
+        //解析markdown为html
+        doc.post=markdown.toHTML(doc.post);
+        callback(null,doc);
+      });
+    });
+  });
+};
