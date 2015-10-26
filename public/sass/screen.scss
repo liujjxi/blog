@@ -112,3 +112,24 @@ article {
     -webkit-transition: color .2s linear;
   }
 }
+.prepage,
+.nextpage {
+  a {
+    float: left;
+    text-decoration: none;
+    padding: .5em 1em;
+    color: #ff0000;
+    font-weight: bold;
+    &:hover{
+      text-decoration: none;
+      background-color: #ff0000;
+      color: #f9f9f9;
+      -webkit-transition: color .2s linear;
+    }
+  }
+}
+
+.nextpage a {
+    float: right;
+}
+

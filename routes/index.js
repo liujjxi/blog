@@ -18,7 +18,8 @@ var crypto=require('crypto'),//生成散列值来加密密码
     Comment=require('../models/comment.js');//User 是一个描述数据的对象，即 MVC 架构中的模型
 module.exports = function(app) {
   app.get('/', function (req, res) {
-    Post.getAll(null,function(err,posts){
+    var page=req.query.p?parseInt(req.query.p):1;
+    Post.getTen(null,page,function(err,posts,total){
       if(err){
         posts=[];
       }
@@ -26,6 +27,9 @@ module.exports = function(app) {
         title:'主页',
         user:req.session.user,
         posts:posts,
+        page:page,
+        isFirstPage:(page-1)==0,
+        isLastPage:((page-1)*10+posts.length)==total,
         success:req.flash('success').toString(),
         error:req.flash('error').toString()
       });
@@ -151,6 +155,7 @@ module.exports = function(app) {
     res.redirect('/upload');
   });
   app.get('/u/:name',function(req,res){
+    var page=req.query.p?parseInt(req.query.p):1;
     //检查用户是否存在
     User.get(req.params.name,function(err,user){
       if(!user){
@@ -158,7 +163,7 @@ module.exports = function(app) {
         return res.redirect('/');
       }
       //查询并返回该用户的所有文章
-      Post.getAll(user.name,function(err,posts){
+      Post.getTen(user.name,page,function(err,posts,total){
         if(err){
           req.flash('error',err);
           return res.redirect('/');
@@ -166,6 +171,9 @@ module.exports = function(app) {
         res.render('user',{
           title:user.name,
           posts:posts,
+          page:page,
+          isFirstPage:(page-1)==0,
+          isLastPage:((page-1)*10+posts.length)==total,
           user:req.session.user,
           success:req.flash('success').toString(),
           error:req.flash('error').toString()
