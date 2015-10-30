@@ -59,7 +59,7 @@ nav a:hover {
 }
 
 /* line 53, ../sass/screen.scss */
-.form-horizontal .form-group {
+form .form-group {
   overflow: hidden;
 }
 
