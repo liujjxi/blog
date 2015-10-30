@@ -58,28 +58,33 @@ nav a:hover {
   -webkit-transition: color .2s linear;
 }
 
-/* line 54, ../sass/screen.scss */
+/* line 53, ../sass/screen.scss */
+.form-horizontal .form-group {
+  overflow: hidden;
+}
+
+/* line 58, ../sass/screen.scss */
 article {
   font-size: 16px;
   padding-top: .5em;
 }
-/* line 57, ../sass/screen.scss */
+/* line 61, ../sass/screen.scss */
 article a {
   color: #dd0000;
   text-decoration: none;
 }
-/* line 60, ../sass/screen.scss */
+/* line 64, ../sass/screen.scss */
 article a:hover {
   color: #333333;
   text-decoration: underline;
 }
 
-/* line 68, ../sass/screen.scss */
+/* line 72, ../sass/screen.scss */
 .info {
   font-size: 14px;
 }
 
-/* line 72, ../sass/screen.scss */
+/* line 76, ../sass/screen.scss */
 .upload {
   position: relative;
   display: inline-block;
@@ -93,7 +98,7 @@ article a:hover {
   text-indent: 0;
   line-height: 20px;
 }
-/* line 84, ../sass/screen.scss */
+/* line 88, ../sass/screen.scss */
 .upload:hover {
   background: #AADFFD;
   border-color: #78C3F3;
@@ -101,7 +106,7 @@ article a:hover {
   text-decoration: none;
 }
 
-/* line 93, ../sass/screen.scss */
+/* line 97, ../sass/screen.scss */
 #upload {
   position: absolute;
   font-size: 100px;
@@ -110,7 +115,7 @@ article a:hover {
   opacity: 0;
 }
 
-/* line 101, ../sass/screen.scss */
+/* line 105, ../sass/screen.scss */
 .edit {
   margin: 3px;
   padding: 2px 5px;
@@ -119,7 +124,7 @@ article a:hover {
   color: #333;
   font-size: 13px;
 }
-/* line 108, ../sass/screen.scss */
+/* line 112, ../sass/screen.scss */
 .edit:hover {
   text-decoration: none;
   background-color: #f00;
@@ -127,7 +132,7 @@ article a:hover {
   -webkit-transition: color .2s linear;
 }
 
-/* line 117, ../sass/screen.scss */
+/* line 121, ../sass/screen.scss */
 .prepage a,
 .nextpage a {
   float: left;
@@ -136,7 +141,7 @@ article a:hover {
   color: #ff0000;
   font-weight: bold;
 }
-/* line 123, ../sass/screen.scss */
+/* line 127, ../sass/screen.scss */
 .prepage a:hover,
 .nextpage a:hover {
   text-decoration: none;
@@ -145,21 +150,21 @@ article a:hover {
   -webkit-transition: color .2s linear;
 }
 
-/* line 132, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 .nextpage a {
   float: right;
 }
 
-/* line 136, ../sass/screen.scss */
+/* line 140, ../sass/screen.scss */
 .archive {
   list-style: none;
   line-height: 28px;
 }
-/* line 139, ../sass/screen.scss */
+/* line 143, ../sass/screen.scss */
 .archive h3 {
   margin: 0.5em 0;
 }
-/* line 142, ../sass/screen.scss */
+/* line 146, ../sass/screen.scss */
 .archive time {
   float: left;
   font-size: 14px;
@@ -167,7 +172,7 @@ article a:hover {
   margin-right: 1.2em;
 }
 
-/* line 151, ../sass/screen.scss */
+/* line 155, ../sass/screen.scss */
 .tag {
   background-color: #ff0000;
   border-radius: 3px;
@@ -177,7 +182,7 @@ article a:hover {
   padding: 0 5px;
   margin-bottom: 8px;
 }
-/* line 159, ../sass/screen.scss */
+/* line 163, ../sass/screen.scss */
 .tag:hover {
   text-decoration: none;
   background-color: #ffffff;
@@ -185,11 +190,25 @@ article a:hover {
   -webkit-transition: color .2s linear;
 }
 
-/* line 167, ../sass/screen.scss */
+/* line 171, ../sass/screen.scss */
 .search {
   border: 0;
   width: 6em;
   text-align: center;
   font-size: 1em;
   margin: 0.5em 0;
+}
+
+/* line 178, ../sass/screen.scss */
+.l_head {
+  float: left;
+  margin-left: -4em;
+  box-shadow: 0px 1px 4px #888;
+}
+
+/* line 184, ../sass/screen.scss */
+.r_head {
+  float: right;
+  margin-top: -2.5em;
+  box-shadow: 0px 1px 4px #888;
 }

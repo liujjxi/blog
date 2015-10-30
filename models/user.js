@@ -1,4 +1,5 @@
 var mongodb = require('./db');
+var crypto = require('crypto');
 
 function User(user) {
   this.name = user.name;
@@ -10,11 +11,13 @@ module.exports = User;
 
 //储存用户信息
 User.prototype.save = function(callback) {
+  var head="http://q4.qlogo.cn/g?b=qq&nk="+this.email.toLowerCase()+'&s=1';
   //要存入数据库的用户文档
   var user = {
       name: this.name,
       password: this.password,
-      email: this.email
+      email: this.email,
+      head:head
   };
   //打开数据库
   mongodb.open(function (err, db) {
