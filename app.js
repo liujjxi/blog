@@ -12,7 +12,9 @@ var routes = require('./routes/index');
 var settings=require('./settings');
 var flash=require('connect-flash');
 var multer=require('multer');//文件上传功能
-
+var fs=require('fs');
+var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
+var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
 var app = express();//生成一个express实例 app。
 
 
@@ -20,11 +22,16 @@ app.set('port', process.env.PORT || 3000);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));//设置 views 文件夹为存放视图文件的目录, 即存放模板文件的地方,__dirname 为全局变量,存储当前正在执行的脚本所在的目录。
 app.set('view engine', 'ejs');//设置视图模板引擎为 ejs。
-
+app.use(function (err, req, res, next) {
+  var meta = '[' + new Date() + '] ' + req.url + '\n';
+  errorLog.write(meta + err.stack + '\n');
+  next();
+});
 app.use(flash());//使用 flash 功能
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));设置/public/favicon.ico为favicon图标。
-app.use(logger('dev'));//加载日志中间件
+// app.use(logger('dev'));//加载日志中间件
+app.use(logger({stream:accessLog}));//加载日志中间件
 app.use(bodyParser.json());//加载解析json的中间件。
 app.use(bodyParser.urlencoded({ extended: false }));//加载解析urlencoded请求体的中间件。
 app.use(cookieParser());//加载解析cookie的中间件。
