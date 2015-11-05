@@ -40,13 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));//设置public文件夹�
 
 app.use(session({
   secret:settings.cookieSecret,
-  key:settings.db,
   cookie:{maxAge:1000*60*60*24*30},//30天
-  store:new MongoStore({
-    db:settings.db,
-    host:settings.host,
-    port:settings.port
-  })
+  url:settings.url
 }));
 
 app.use(multer({
